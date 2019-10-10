@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Speedomter">
+        <attr name="speed" format="integer" />
+        <attr name="max_speed" format="integer" />
+        <attr name="color_arrow" format="color"/>
+        <attr name="color_low" format="color" />
+        <attr name="color_mid" format="color" />
+        <attr name="color_high" format="color" />
+    </declare-styleable>
+</resources>
