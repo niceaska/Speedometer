@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Speedometer</string>
+    <string name="format_string">%d км/ч</string>
 </resources>

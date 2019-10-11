@@ -47,6 +47,7 @@ public class Speedomter extends View {
         init(context, attrs);
     }
 
+
     private void init(Context context, AttributeSet attrs) {
         obtainAttrs(context, attrs);
         initArcPaint();
@@ -69,7 +70,7 @@ public class Speedomter extends View {
         final TypedArray typedArray = theme.obtainStyledAttributes(attrs, R.styleable.Speedomter,
                 0, R.style.speedometer_default_style);
         try {
-            speed = typedArray.getInteger( R.styleable.Speedomter_speed, 400);
+            speed = typedArray.getInteger( R.styleable.Speedomter_speed, 0);
             color_arrow = typedArray.getInteger( R.styleable.Speedomter_color_arrow, 0);
             max_speed = typedArray.getInteger( R.styleable.Speedomter_max_speed, 0);
             color_low = typedArray.getInteger( R.styleable.Speedomter_color_low, 0);
@@ -96,7 +97,7 @@ public class Speedomter extends View {
         canvas.restore();
 
         canvas.drawCircle(arcRect.width() / 2, arcRect.height() / 2, arcRect.width() / 4, innerArcPaint);
-        String str = String.format("%d км/ч", speed);
+        String str = String.format(getResources().getString(R.string.format_string), speed);
         textPaint.getTextBounds(str, 0, str.length(), textBoudsRect);
         float x = arcRect.width() / 2f - textBoudsRect.width() / 2f - textBoudsRect.left;
         float y = arcRect.height() / 2f + textBoudsRect.height() / 2f - textBoudsRect.bottom;
@@ -118,7 +119,8 @@ public class Speedomter extends View {
     }
 
     public void setSpeed(int speed) {
-        this.speed = speed;
+        this.speed = (speed <= 400) ? speed : 400;
+        invalidate();
     }
 
     public int getColor_arrow() {
@@ -127,6 +129,7 @@ public class Speedomter extends View {
 
     public void setColor_arrow(int color_arrow) {
         this.color_arrow = color_arrow;
+        invalidate();
     }
 
 
@@ -144,6 +147,7 @@ public class Speedomter extends View {
 
     public void setColor_low(int color_low) {
         this.color_low = color_low;
+        invalidate();
     }
 
     public int getColor_mid() {
@@ -152,6 +156,7 @@ public class Speedomter extends View {
 
     public void setColor_mid(int color_mid) {
         this.color_mid = color_mid;
+        invalidate();
     }
 
     public int getColor_high() {
@@ -160,6 +165,7 @@ public class Speedomter extends View {
 
     public void setColor_high(int color_high) {
         this.color_high = color_high;
+        invalidate();
     }
 
 }

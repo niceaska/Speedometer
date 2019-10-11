@@ -9,7 +9,20 @@
     <ru.niceaska.speedometer.Speedomter
         android:id="@+id/speedometer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/speedometer_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="400"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/seekbar_margin" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

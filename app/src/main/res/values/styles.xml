@@ -16,4 +16,8 @@
         <item name="max_speed">400</item>
         <item name="color_arrow">@android:color/background_dark</item>
     </style>
+
+    <style name="seekbar_margin">
+        <item name="android:layout_marginBottom">40dp</item>
+    </style>
 </resources>
