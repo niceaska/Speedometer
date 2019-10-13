@@ -16,18 +16,18 @@ import androidx.annotation.Nullable;
 public class Speedomter extends View {
 
     private int speed;
-    private int color_arrow;
-    private int max_speed;
-    private int color_low;
-    private int color_mid;
-    private int color_high;
+    private int colorArrow;
+    private int maxSpeed;
+    private int colorLow;
+    private int colorMid;
+    private int colorHigh;
 
     private Paint arrowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint arcPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint innerArcPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FAKE_BOLD_TEXT_FLAG);
-    private Rect textBoudsRect = new Rect();
+    private Rect textBoundsRect = new Rect();
 
     private RectF arcRect = new RectF(0, 0, 500, 500);
 
@@ -51,9 +51,11 @@ public class Speedomter extends View {
     private void init(Context context, AttributeSet attrs) {
         obtainAttrs(context, attrs);
         initArcPaint();
-        arrowPaint.setColor(color_arrow);
-        textPaint.setTextSize(36f);
-        textPaint.setColor(color_arrow);
+        final float textSize = getContext().getResources()
+                .getDimension(R.dimen.speedometr_text_size);
+        arrowPaint.setColor(colorArrow);
+        textPaint.setTextSize(textSize);
+        textPaint.setColor(colorArrow);
         innerArcPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         innerArcPaint.setColor(Color.LTGRAY);
 
@@ -61,7 +63,7 @@ public class Speedomter extends View {
 
     private void initArcPaint() {
         arcPaint.setStyle(Paint.Style.STROKE);
-        arcPaint.setColor(color_low);
+        arcPaint.setColor(colorLow);
         arcPaint.setStrokeWidth(STROKE_WIDTH);
     }
 
@@ -71,11 +73,11 @@ public class Speedomter extends View {
                 0, R.style.speedometer_default_style);
         try {
             speed = typedArray.getInteger( R.styleable.Speedomter_speed, 0);
-            color_arrow = typedArray.getInteger( R.styleable.Speedomter_color_arrow, 0);
-            max_speed = typedArray.getInteger( R.styleable.Speedomter_max_speed, 0);
-            color_low = typedArray.getInteger( R.styleable.Speedomter_color_low, 0);
-            color_mid = typedArray.getInteger( R.styleable.Speedomter_color_mid, 0);
-            color_high = typedArray.getInteger( R.styleable.Speedomter_color_high, 0);
+            colorArrow = typedArray.getInteger( R.styleable.Speedomter_color_arrow, 0);
+            maxSpeed = typedArray.getInteger( R.styleable.Speedomter_max_speed, 0);
+            colorLow = typedArray.getInteger( R.styleable.Speedomter_color_low, 0);
+            colorMid = typedArray.getInteger( R.styleable.Speedomter_color_mid, 0);
+            colorHigh = typedArray.getInteger( R.styleable.Speedomter_color_high, 0);
         } finally {
             typedArray.recycle();
         }
@@ -85,7 +87,7 @@ public class Speedomter extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.translate(STROKE_WIDTH / 2, STROKE_WIDTH / 2);
-        final float sweepAngle = speed * 1.0f / max_speed * MAX_ANGLE;
+        final float sweepAngle = speed * 1.0f / maxSpeed * MAX_ANGLE;
         final float startAngle = -180f;
 
         setSpeedColor();
@@ -98,19 +100,19 @@ public class Speedomter extends View {
 
         canvas.drawCircle(arcRect.width() / 2, arcRect.height() / 2, arcRect.width() / 4, innerArcPaint);
         String str = String.format(getResources().getString(R.string.format_string), speed);
-        textPaint.getTextBounds(str, 0, str.length(), textBoudsRect);
-        float x = arcRect.width() / 2f - textBoudsRect.width() / 2f - textBoudsRect.left;
-        float y = arcRect.height() / 2f + textBoudsRect.height() / 2f - textBoudsRect.bottom;
+        textPaint.getTextBounds(str, 0, str.length(), textBoundsRect);
+        float x = arcRect.width() / 2f - textBoundsRect.width() / 2f - textBoundsRect.left;
+        float y = arcRect.height() / 2f + textBoundsRect.height() / 2f - textBoundsRect.bottom;
         canvas.drawText(str, x, y, textPaint);
     }
 
     private void setSpeedColor() {
-        if (speed < max_speed / 3) {
-            arcPaint.setColor(color_low);
-        } else if (speed < max_speed / 2) {
-            arcPaint.setColor(color_mid);
+        if (speed < maxSpeed / 3) {
+            arcPaint.setColor(colorLow);
+        } else if (speed < maxSpeed / 2) {
+            arcPaint.setColor(colorMid);
         } else {
-            arcPaint.setColor(color_high);
+            arcPaint.setColor(colorHigh);
         }
     }
 
@@ -119,52 +121,52 @@ public class Speedomter extends View {
     }
 
     public void setSpeed(int speed) {
-        this.speed = (speed <= 400) ? speed : 400;
+        this.speed = (speed <= maxSpeed) ? speed : maxSpeed;
         invalidate();
     }
 
-    public int getColor_arrow() {
-        return color_arrow;
+    public int getColorArrow() {
+        return colorArrow;
     }
 
-    public void setColor_arrow(int color_arrow) {
-        this.color_arrow = color_arrow;
+    public void setColorArrow(int colorArrow) {
+        this.colorArrow = colorArrow;
         invalidate();
     }
 
 
-    public int getMax_speed() {
-        return max_speed;
+    public int getMaxSpeed() {
+        return maxSpeed;
     }
 
-    public void setMax_speed(int max_speed) {
-        this.max_speed = max_speed;
+    public void setMaxSpeed(int maxSpeed) {
+        this.maxSpeed = maxSpeed;
     }
 
-    public int getColor_low() {
-        return color_low;
+    public int getColorLow() {
+        return colorLow;
     }
 
-    public void setColor_low(int color_low) {
-        this.color_low = color_low;
+    public void setColorLow(int colorLow) {
+        this.colorLow = colorLow;
         invalidate();
     }
 
-    public int getColor_mid() {
-        return color_mid;
+    public int getColorMid() {
+        return colorMid;
     }
 
-    public void setColor_mid(int color_mid) {
-        this.color_mid = color_mid;
+    public void setColorMid(int colorMid) {
+        this.colorMid = colorMid;
         invalidate();
     }
 
-    public int getColor_high() {
-        return color_high;
+    public int getColorHigh() {
+        return colorHigh;
     }
 
-    public void setColor_high(int color_high) {
-        this.color_high = color_high;
+    public void setColorHigh(int colorHigh) {
+        this.colorHigh = colorHigh;
         invalidate();
     }
 
